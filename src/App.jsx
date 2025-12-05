@@ -237,46 +237,46 @@ const CoachingDashboard = () => {
   );
 
   const ThemeDrillDown = ({ theme, sources, type }) => {
-    const isExpanded = expandedTheme === theme;
-    
-    return (
-      <div className="border rounded-lg mb-3 overflow-hidden">
-        <button
-          onClick={() => setExpandedTheme(isExpanded ? null : theme)}
-          className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-            <span className="font-medium text-gray-800">{theme}</span>
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-              type === 'strength' ? 'bg-green-200 text-green-800' : 'bg-orange-200 text-orange-800'
-            }`}>
-              {sources.length} mentions
-            </span>
-          </div>
-        </button>
-        
-        {isExpanded && (
-          <div className="bg-gray-50 p-4 border-t">
-            <div className="space-y-3">
-              {sources.map((source, idx) => (
-                <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <span className="font-semibold text-gray-800">{source.site}</span>
-                      <span className="text-gray-500 text-sm ml-2">• Coach: {source.coach}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">{source.date}</span>
+  const isExpanded = expandedTheme === theme;
+  
+  return (
+    <div className="border rounded-lg mb-3 overflow-hidden">
+      <button
+        onClick={() => setExpandedTheme(isExpanded ? null : theme)}
+        className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+          <span className="font-medium text-gray-800">{theme}</span>
+          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+            type === 'strength' ? 'bg-green-200 text-green-800' : 'bg-orange-200 text-orange-800'
+          }`}>
+            {sources.length} mentions
+          </span>
+        </div>
+      </button>
+      
+      {isExpanded && (
+        <div className="bg-gray-50 p-4 border-t">
+          <div className="space-y-3">
+            {sources.map((source, idx) => (
+              <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <span className="font-semibold text-gray-800">{source.site}</span>
+                    <span className="text-gray-500 text-sm ml-2">• Coach: {source.coach}</span>
                   </div>
-                  <p className="text-sm text-gray-700 italic">"{source.text}"</p>
+                  <span className="text-xs text-gray-500">{source.date}</span>
                 </div>
-              ))}
-            </div>
+                <p className="text-sm text-gray-700 italic">"{source.text}"</p>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
-    );
-  };
+        </div>
+      )}
+    </div>
+  );
+};
 
   const OverviewTab = () => (
     <div className="space-y-6">
