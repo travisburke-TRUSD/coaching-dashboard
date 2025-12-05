@@ -182,21 +182,20 @@ const CoachingDashboard = () => {
   }
 
   const FilterBar = () => (
-    <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-      <div className="flex items-center gap-8 flex-wrap">
-        <div className="flex items-center gap-4">
-          <Filter size={32} className="text-gray-600" />
-          <span className="font-bold text-2xl text-gray-700">Filters:</span>
+    <div className="bg-white rounded-2xl shadow-xl p-10 mb-10 max-w-5xl mx-auto">
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <Filter size={40} className="text-blue-600" />
+          <span className="font-bold text-3xl text-gray-800">Filters</span>
         </div>
         
-        <div className="flex-1 flex gap-8 flex-wrap">
-          <div className="flex-1 min-w-[300px]">
-            <label className="block text-xl font-bold text-gray-700 mb-3">Coach</label>
+        <div className="flex flex-col gap-8">
+          <div className="w-full">
+            <label className="block text-2xl font-bold text-gray-800 mb-4">Select Coach</label>
             <select
               value={selectedCoach}
               onChange={(e) => setSelectedCoach(e.target.value)}
-              className="w-full px-6 py-4 text-lg border-3 border-gray-400 rounded-xl focus:ring-4 focus:ring-blue-500 focus:border-blue-500 font-medium"
-              style={{ borderWidth: '3px' }}
+              className="w-full px-8 py-5 text-xl border-4 border-blue-400 rounded-2xl focus:ring-4 focus:ring-blue-500 focus:border-blue-600 font-semibold bg-white shadow-md"
             >
               <option value="all">All Coaches</option>
               {data.coaches.map(coach => (
@@ -205,13 +204,12 @@ const CoachingDashboard = () => {
             </select>
           </div>
           
-          <div className="flex-1 min-w-[300px]">
-            <label className="block text-xl font-bold text-gray-700 mb-3">Site</label>
+          <div className="w-full">
+            <label className="block text-2xl font-bold text-gray-800 mb-4">Select Site</label>
             <select
               value={selectedSite}
               onChange={(e) => setSelectedSite(e.target.value)}
-              className="w-full px-6 py-4 text-lg border-3 border-gray-400 rounded-xl focus:ring-4 focus:ring-blue-500 focus:border-blue-500 font-medium"
-              style={{ borderWidth: '3px' }}
+              className="w-full px-8 py-5 text-xl border-4 border-green-400 rounded-2xl focus:ring-4 focus:ring-green-500 focus:border-green-600 font-semibold bg-white shadow-md"
             >
               <option value="all">All Sites</option>
               {data.sites.map(site => (
@@ -227,10 +225,10 @@ const CoachingDashboard = () => {
               setSelectedCoach('all');
               setSelectedSite('all');
             }}
-            className="flex items-center gap-3 px-8 py-4 text-lg bg-gray-200 hover:bg-gray-300 rounded-xl text-gray-700 font-bold"
+            className="mt-8 flex items-center justify-center gap-3 px-10 py-5 text-xl bg-red-500 hover:bg-red-600 rounded-2xl text-white font-bold shadow-lg mx-auto"
           >
-            <X size={24} />
-            Clear Filters
+            <X size={28} />
+            Clear All Filters
           </button>
         )}
       </div>
@@ -239,53 +237,53 @@ const CoachingDashboard = () => {
 
   const ThemeDrillDown = ({ theme, sources, type }) => {
     const isExpanded = expandedTheme === theme;
-    const strengthClass = "bg-green-200 text-green-800";
-    const improvementClass = "bg-orange-200 text-orange-800";
+    const strengthClass = "bg-green-500 text-white";
+    const improvementClass = "bg-orange-500 text-white";
     const badgeClass = type === 'strength' ? strengthClass : improvementClass;
     
     const themeColors = {
-      'Strong Relationships': 'bg-blue-100 hover:bg-blue-200 border-blue-400',
-      'Good Structure': 'bg-green-100 hover:bg-green-200 border-green-400',
-      'Student Engagement': 'bg-yellow-100 hover:bg-yellow-200 border-yellow-400',
-      'Effective Transitions': 'bg-purple-100 hover:bg-purple-200 border-purple-400',
-      'Staff Collaboration': 'bg-indigo-100 hover:bg-indigo-200 border-indigo-400',
-      'Staffing Issues': 'bg-red-100 hover:bg-red-200 border-red-400',
-      'Supervision Concerns': 'bg-orange-100 hover:bg-orange-200 border-orange-400',
-      'Space/Classroom Needs': 'bg-yellow-100 hover:bg-yellow-200 border-yellow-400',
-      'Communication Needs': 'bg-blue-100 hover:bg-blue-200 border-blue-400',
-      'Admin/Procare Support': 'bg-green-100 hover:bg-green-200 border-green-400'
+      'Strong Relationships': 'bg-blue-400 hover:bg-blue-500 border-blue-600 text-blue-900',
+      'Good Structure': 'bg-green-400 hover:bg-green-500 border-green-600 text-green-900',
+      'Student Engagement': 'bg-yellow-400 hover:bg-yellow-500 border-yellow-600 text-yellow-900',
+      'Effective Transitions': 'bg-purple-400 hover:bg-purple-500 border-purple-600 text-purple-900',
+      'Staff Collaboration': 'bg-indigo-400 hover:bg-indigo-500 border-indigo-600 text-indigo-900',
+      'Staffing Issues': 'bg-red-400 hover:bg-red-500 border-red-600 text-red-900',
+      'Supervision Concerns': 'bg-orange-400 hover:bg-orange-500 border-orange-600 text-orange-900',
+      'Space/Classroom Needs': 'bg-yellow-400 hover:bg-yellow-500 border-yellow-600 text-yellow-900',
+      'Communication Needs': 'bg-blue-400 hover:bg-blue-500 border-blue-600 text-blue-900',
+      'Admin/Procare Support': 'bg-green-400 hover:bg-green-500 border-green-600 text-green-900'
     };
     
-    const buttonColor = themeColors[theme] || 'bg-gray-100 hover:bg-gray-200 border-gray-400';
+    const buttonColor = themeColors[theme] || 'bg-gray-400 hover:bg-gray-500 border-gray-600 text-gray-900';
     
     return (
-      <div className={"border-4 rounded-xl mb-6 overflow-hidden shadow-md " + buttonColor}>
+      <div className={"border-4 rounded-2xl mb-6 overflow-hidden shadow-xl " + buttonColor}>
         <button
           onClick={() => setExpandedTheme(isExpanded ? null : theme)}
-          className={"w-full flex justify-between items-center p-6 transition-colors " + buttonColor}
+          className={"w-full flex justify-between items-center p-8 transition-all transform hover:scale-105 " + buttonColor}
         >
-          <div className="flex items-center gap-5">
-            {isExpanded ? <ChevronDown size={32} className="font-bold" /> : <ChevronRight size={32} className="font-bold" />}
-            <span className="font-bold text-xl text-gray-800">{theme}</span>
-            <span className={"px-5 py-2 rounded-full text-lg font-bold " + badgeClass}>
+          <div className="flex items-center gap-6">
+            {isExpanded ? <ChevronDown size={40} className="font-bold" /> : <ChevronRight size={40} className="font-bold" />}
+            <span className="font-black text-2xl">{theme}</span>
+            <span className={"px-6 py-3 rounded-full text-xl font-black shadow-lg " + badgeClass}>
               {sources.length} mentions
             </span>
           </div>
         </button>
         
         {isExpanded && (
-          <div className="bg-white p-6 border-t-4">
-            <div className="space-y-5">
+          <div className="bg-white p-8 border-t-4">
+            <div className="space-y-6">
               {sources.map((source, idx) => (
-                <div key={idx} className="bg-gray-50 p-6 rounded-xl shadow-md border-2 border-gray-300">
-                  <div className="flex justify-between items-start mb-4">
+                <div key={idx} className="bg-gray-50 p-8 rounded-2xl shadow-lg border-2 border-gray-300 hover:shadow-xl transition-shadow">
+                  <div className="flex justify-between items-start mb-5">
                     <div>
-                      <span className="font-bold text-xl text-gray-800">{source.site}</span>
-                      <span className="text-gray-600 text-lg ml-3">• Coach: {source.coach}</span>
+                      <span className="font-black text-2xl text-gray-900">{source.site}</span>
+                      <span className="text-gray-700 text-xl ml-4 font-semibold">• Coach: {source.coach}</span>
                     </div>
-                    <span className="text-base text-gray-500">{source.date}</span>
+                    <span className="text-lg text-gray-600 font-medium">{source.date}</span>
                   </div>
-                  <p className="text-lg text-gray-700 italic leading-relaxed">"{source.text}"</p>
+                  <p className="text-xl text-gray-800 italic leading-relaxed font-medium">"{source.text}"</p>
                 </div>
               ))}
             </div>
@@ -566,15 +564,15 @@ const CoachingDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Coaching Dashboard</h1>
-          <p className="text-gray-600">2025-26 EXLP Coaching Log Analytics</p>
+        <header className="mb-8 text-center">
+          <h1 className="text-5xl font-bold text-gray-800 mb-3">Coaching Dashboard</h1>
+          <p className="text-xl text-gray-600">2025-26 EXLP Coaching Log Analytics</p>
         </header>
 
         <FilterBar />
 
-        <div className="bg-white rounded-lg shadow mb-6">
-          <nav className="flex space-x-1 p-2">
+        <div className="bg-white rounded-lg shadow mb-6 max-w-4xl mx-auto">
+          <nav className="flex justify-center space-x-2 p-3">
             {[
               { id: 'overview', label: 'Overview' },
               { id: 'coaches', label: 'Coach View' },
@@ -589,7 +587,7 @@ const CoachingDashboard = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={"px-6 py-3 rounded-lg font-medium transition-colors " + buttonClass}
+                  className={"px-8 py-4 rounded-xl font-bold text-lg transition-colors " + buttonClass}
                 >
                   {tab.label}
                 </button>
