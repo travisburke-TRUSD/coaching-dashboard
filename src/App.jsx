@@ -182,20 +182,20 @@ const CoachingDashboard = () => {
   }
 
   const FilterBar = () => (
-    <div className="bg-white rounded-lg shadow p-4 mb-6">
-      <div className="flex items-center gap-4 flex-wrap">
-        <div className="flex items-center gap-2">
-          <Filter size={20} className="text-gray-600" />
-          <span className="font-medium text-gray-700">Filters:</span>
+    <div className="bg-white rounded-lg shadow p-6 mb-6">
+      <div className="flex items-center gap-6 flex-wrap">
+        <div className="flex items-center gap-3">
+          <Filter size={24} className="text-gray-600" />
+          <span className="font-semibold text-lg text-gray-700">Filters:</span>
         </div>
         
-        <div className="flex-1 flex gap-4 flex-wrap">
-          <div className="flex-1 min-w-[200px]">
-            <label className="block text-sm text-gray-600 mb-1">Coach</label>
+        <div className="flex-1 flex gap-6 flex-wrap">
+          <div className="flex-1 min-w-[250px]">
+            <label className="block text-base font-medium text-gray-700 mb-2">Coach</label>
             <select
               value={selectedCoach}
               onChange={(e) => setSelectedCoach(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">All Coaches</option>
               {data.coaches.map(coach => (
@@ -204,12 +204,12 @@ const CoachingDashboard = () => {
             </select>
           </div>
           
-          <div className="flex-1 min-w-[200px]">
-            <label className="block text-sm text-gray-600 mb-1">Site</label>
+          <div className="flex-1 min-w-[250px]">
+            <label className="block text-base font-medium text-gray-700 mb-2">Site</label>
             <select
               value={selectedSite}
               onChange={(e) => setSelectedSite(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="all">All Sites</option>
               {data.sites.map(site => (
@@ -225,9 +225,9 @@ const CoachingDashboard = () => {
               setSelectedCoach('all');
               setSelectedSite('all');
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-700"
+            className="flex items-center gap-2 px-5 py-3 text-base bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-700 font-medium"
           >
-            <X size={16} />
+            <X size={18} />
             Clear Filters
           </button>
         )}
@@ -241,34 +241,49 @@ const CoachingDashboard = () => {
     const improvementClass = "bg-orange-200 text-orange-800";
     const badgeClass = type === 'strength' ? strengthClass : improvementClass;
     
+    const themeColors = {
+      'Strong Relationships': 'bg-blue-100 hover:bg-blue-200 border-blue-300',
+      'Good Structure': 'bg-green-100 hover:bg-green-200 border-green-300',
+      'Student Engagement': 'bg-yellow-100 hover:bg-yellow-200 border-yellow-300',
+      'Effective Transitions': 'bg-purple-100 hover:bg-purple-200 border-purple-300',
+      'Staff Collaboration': 'bg-indigo-100 hover:bg-indigo-200 border-indigo-300',
+      'Staffing Issues': 'bg-red-100 hover:bg-red-200 border-red-300',
+      'Supervision Concerns': 'bg-orange-100 hover:bg-orange-200 border-orange-300',
+      'Space/Classroom Needs': 'bg-yellow-100 hover:bg-yellow-200 border-yellow-300',
+      'Communication Needs': 'bg-blue-100 hover:bg-blue-200 border-blue-300',
+      'Admin/Procare Support': 'bg-green-100 hover:bg-green-200 border-green-300'
+    };
+    
+    const buttonColor = themeColors[theme] || 'bg-gray-100 hover:bg-gray-200 border-gray-300';
+    
     return (
-      <div className="border rounded-lg mb-3 overflow-hidden">
+      <div className={"border-2 rounded-lg mb-4 overflow-hidden " + buttonColor}>
         <button
           onClick={() => setExpandedTheme(isExpanded ? null : theme)}
-          className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition-colors"
+          className={"w-full flex justify-between items-center p-5 transition-colors " + buttonColor}
         >
-          <div className="flex items-center gap-3">
-            {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-            <span className="font-medium text-gray-800">{theme}</span>
-            <span className={"px-3 py-1 rounded-full text-sm font-medium " + badgeClass}>
+          <div className="flex items-center gap-4">
+            {isExpanded ? <ChevronDown size={24} /> : <ChevronRight size={24} />}
+            <span className="font-semibold text-lg text-gray-800">{theme}</span>
+            <span className={"px-4 py-2 rounded-full text-base font-semibold " + badgeClass}>
               {sources.length} mentions
             </span>
           </div>
         </button>
         
         {isExpanded && (
-          <div className="bg-gray-50 p-4 border-t">
-            <div className="space-y-3">
+          <div className="bg-white p-5 border-t-2">
+            <div className="space-y-4">
               {sources.map((source, idx) => (
-                <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
-                  <div className="flex justify-between items-start mb-2">
+                <div key={idx} className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200">
+                  <div className="flex justify-between items-start mb-3">
                     <div>
-                      <span className="font-semibold text-gray-800">{source.site}</span>
-                      <span className="text-gray-500 text-sm ml-2">• Coach: {source.coach}</span>
+                      <span className="font-bold text-lg text-gray-800">{source.site}</span>
+                      <span className="text-gray-600 text-base ml-3">• Coach: {source.coach}</span>
                     </div>
-                    <span className="text-xs text-gray-500">{source.date}</span>
+                    <span className="text-sm text-gray-500">{source.date}</span>
                   </div>
-                  <p className="text-sm text-gray-700 italic">"{source.text}"</p>
+                  <p className="text-base text-gray-700 italic">"{source.text}"</p>
                 </div>
               ))}
             </div>
