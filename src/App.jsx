@@ -1,6 +1,5 @@
-```javascript
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Users, TrendingUp, MapPin, AlertCircle, Calendar, Award, Filter, X, ChevronDown, ChevronRight } from 'lucide-react';
 
 const CoachingDashboard = () => {
@@ -237,46 +236,47 @@ const CoachingDashboard = () => {
   );
 
   const ThemeDrillDown = ({ theme, sources, type }) => {
-  const isExpanded = expandedTheme === theme;
-  
-  return (
-    <div className="border rounded-lg mb-3 overflow-hidden">
-      <button
-        onClick={() => setExpandedTheme(isExpanded ? null : theme)}
-        className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition-colors"
-      >
-        <div className="flex items-center gap-3">
-          {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-          <span className="font-medium text-gray-800">{theme}</span>
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-            type === 'strength' ? 'bg-green-200 text-green-800' : 'bg-orange-200 text-orange-800'
-          }`}>
-            {sources.length} mentions
-          </span>
-        </div>
-      </button>
-      
-      {isExpanded && (
-        <div className="bg-gray-50 p-4 border-t">
-          <div className="space-y-3">
-            {sources.map((source, idx) => (
-              <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <span className="font-semibold text-gray-800">{source.site}</span>
-                    <span className="text-gray-500 text-sm ml-2">• Coach: {source.coach}</span>
-                  </div>
-                  <span className="text-xs text-gray-500">{source.date}</span>
-                </div>
-                <p className="text-sm text-gray-700 italic">"{source.text}"</p>
-              </div>
-            ))}
+    const isExpanded = expandedTheme === theme;
+    const strengthClass = "bg-green-200 text-green-800";
+    const improvementClass = "bg-orange-200 text-orange-800";
+    const badgeClass = type === 'strength' ? strengthClass : improvementClass;
+    
+    return (
+      <div className="border rounded-lg mb-3 overflow-hidden">
+        <button
+          onClick={() => setExpandedTheme(isExpanded ? null : theme)}
+          className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+            <span className="font-medium text-gray-800">{theme}</span>
+            <span className={"px-3 py-1 rounded-full text-sm font-medium " + badgeClass}>
+              {sources.length} mentions
+            </span>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+        </button>
+        
+        {isExpanded && (
+          <div className="bg-gray-50 p-4 border-t">
+            <div className="space-y-3">
+              {sources.map((source, idx) => (
+                <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <span className="font-semibold text-gray-800">{source.site}</span>
+                      <span className="text-gray-500 text-sm ml-2">• Coach: {source.coach}</span>
+                    </div>
+                    <span className="text-xs text-gray-500">{source.date}</span>
+                  </div>
+                  <p className="text-sm text-gray-700 italic">"{source.text}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const OverviewTab = () => (
     <div className="space-y-6">
@@ -334,13 +334,13 @@ const CoachingDashboard = () => {
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={entry => `${entry.name}: ${entry.value}`}
+                label={entry => entry.name + ": " + entry.value}
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
               >
                 {displayData.progress.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={"cell-" + index} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
@@ -454,21 +454,22 @@ const CoachingDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {displayData.sites.slice(0, 20).map((site, idx) => (
-                <tr key={idx} className="border-t hover:bg-gray-50">
-                  <td className="px-4 py-3 text-gray-800">{site.name}</td>
-                  <td className="px-4 py-3 text-gray-700">{site.visits}</td>
-                  <td className="px-4 py-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      site.visits >= 4 ? 'bg-green-100 text-green-800' :
-                      site.visits >= 2 ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
-                      {site.visits >= 4 ? 'Well Monitored' : site.visits >= 2 ? 'Regular' : 'Needs Attention'}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {displayData.sites.slice(0, 20).map((site, idx) => {
+                const statusClass = site.visits >= 4 ? 'bg-green-100 text-green-800' : (site.visits >= 2 ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800');
+                const statusText = site.visits >= 4 ? 'Well Monitored' : (site.visits >= 2 ? 'Regular' : 'Needs Attention');
+                
+                return (
+                  <tr key={idx} className="border-t hover:bg-gray-50">
+                    <td className="px-4 py-3 text-gray-800">{site.name}</td>
+                    <td className="px-4 py-3 text-gray-700">{site.visits}</td>
+                    <td className="px-4 py-3">
+                      <span className={"px-3 py-1 rounded-full text-xs font-medium " + statusClass}>
+                        {statusText}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -562,19 +563,21 @@ const CoachingDashboard = () => {
               { id: 'coaches', label: 'Coach View' },
               { id: 'sites', label: 'Site View' },
               { id: 'insights', label: 'Insights' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+            ].map(tab => {
+              const activeClass = "bg-blue-600 text-white";
+              const inactiveClass = "text-gray-600 hover:bg-gray-100";
+              const buttonClass = activeTab === tab.id ? activeClass : inactiveClass;
+              
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={"px-6 py-3 rounded-lg font-medium transition-colors " + buttonClass}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
           </nav>
         </div>
 
@@ -586,3 +589,7 @@ const CoachingDashboard = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export default CoachingDashboard;
